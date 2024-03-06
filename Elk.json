@@ -1,0 +1,38 @@
+{
+  "name": "elasticsearch",
+  "config": {
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+    "tasks.max": "5",
+
+    "topics": "nginx",
+
+    "key.ignore": "true",
+    "schema.ignore": "true",
+
+    "connection.url": "http://192.168.125.158:9200",
+    "type.name": "nginx_logs:_doc",
+
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",
+
+    "transforms": "null_key,null_value",
+
+    "bulk.flush.max.actions": "5000",
+    "bulk.flush.interval.ms": "60000",
+    "connection.pool.size": "10",
+
+    "errors.log.enable": "true",
+    "errors.log.include.messages": "true",
+    "errors.retry.timeout": "30000",
+    "errors.retry.delay.max.ms": "30000",
+    "errors.tolerance": "all",
+
+    "transforms.null_key.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.null_key.replacement": "null",
+
+    "transforms.null_value.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.null_value.replacement": "null"
+  }
+}
