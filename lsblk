@@ -1,24 +1,38 @@
-nginx_offset# Bootstrap servers to connect to Kafka brokers
-bootstrap.servers=192.168.178.144:9092,192.168.178.145:9092,192.168.178.146:9092
-# Kafka Connect converters for data format and translation
-key.converter=org.apache.kafka.connect.json.JsonConverter
-value.converter=org.apache.kafka.connect.json.JsonConverter
+{
+  "name": "elasticsearch",
+  "config": {
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+    "tasks.max": "5",
 
-# General settings
-tasks.max=5
-key.converter.schemas.enable=false
-value.converter.schemas.enable=false
-group.id=logs.group
+    "topics": "logs",
 
-# Offset storage configuration
-offset.storage.topic=logs_offset
-config.storage.topic=logs_storage
-status.storage.topic=log_status
+    "key.ignore": "true",
+    "schema.ignore": "true",
 
-# Flush interval for offset commits (in milliseconds)
-offset.flush.interval.ms=4000
+    "connection.url": "https://xs13tgbd4h:4o2pavo7d8@afra-search-1366889745.us-east-1.bonsaisearch.net:443",
+    "type.name": "nginx_logs:_doc",
 
-# Plugin path for connectors, converters, and transformations
-plugin.path=/usr/share/java,/home/omid/confluentinc-kafka-connect-elasticsearch-14.0.12,/root/elasticsearch-connector/
-# Uncomment the line below for debugging purposes
-log4j.logger.org.apache.kafka.connect=DEBUG
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",
+
+    "transforms": "null_key,null_value",
+
+    "bulk.flush.max.actions": "5000",
+    "bulk.flush.interval.ms": "4000",
+    "connection.pool.size": "10",
+
+    "errors.log.enable": "true",
+    "errors.log.include.messages": "true",
+    "errors.retry.timeout": "30000",
+    "errors.retry.delay.max.ms": "30000",
+    "errors.tolerance": "all",
+
+    "transforms.null_key.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.null_key.replacement": "null",
+
+    "transforms.null_value.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.null_value.replacement": "null"
+  }
+}
