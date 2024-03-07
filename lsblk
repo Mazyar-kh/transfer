@@ -1,162 +1,24 @@
-[2024-03-07 03:31:23,239] INFO [Worker clientId=connect-1, groupId=logs.group] Finished starting connectors and tasks (org.apache.kafka.connect.runtime.distributed.DistributedHerder:1851)
-[2024-03-07 03:31:23,506] INFO [Worker clientId=connect-1, groupId=logs.group] Session key updated (org.apache.kafka.connect.runtime.distributed.DistributedHerder:2331)
-[2024-03-07 03:33:16,381] WARN /connectors (org.eclipse.jetty.server.HttpChannel:776)
-javax.servlet.ServletException: org.glassfish.jersey.server.ContainerException: java.lang.NoClassDefFoundError: org/elasticsearch/ElasticsearchStatusException
-        at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:410)
-        at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:346)
-        at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:358)
-        at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:311)
-        at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:205)
-        at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:799)
-        at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:554)
-        at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:233)
-        at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1624)
-        at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:233)
-        at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1440)
-        at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:188)
-        at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:505)
-        at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1594)
-        at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:186)
-        at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1355)
-        at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
-        at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:191)
-        at org.eclipse.jetty.server.handler.StatisticsHandler.handle(StatisticsHandler.java:181)
-        at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:127)
-        at org.eclipse.jetty.server.Server.handle(Server.java:516)
-        at org.eclipse.jetty.server.HttpChannel.lambda$handle$1(HttpChannel.java:487)
-        at org.eclipse.jetty.server.HttpChannel.dispatch(HttpChannel.java:732)
-        at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:479)
-        at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:277)
-        at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:311)
-        at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:105)
-        at org.eclipse.jetty.io.ChannelEndPoint$1.run(ChannelEndPoint.java:104)
-        at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:883)
-        at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1034)
-        at java.base/java.lang.Thread.run(Thread.java:829)
-Caused by: org.glassfish.jersey.server.ContainerException: java.lang.NoClassDefFoundError: org/elasticsearch/ElasticsearchStatusException
-        at org.glassfish.jersey.servlet.internal.ResponseWriter.rethrow(ResponseWriter.java:255)
-        at org.glassfish.jersey.servlet.internal.ResponseWriter.failure(ResponseWriter.java:237)
-        at org.glassfish.jersey.server.ServerRuntime$Responder.process(ServerRuntime.java:445)
-        at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:264)
-        at org.glassfish.jersey.internal.Errors$1.call(Errors.java:248)
-        at org.glassfish.jersey.internal.Errors$1.call(Errors.java:244)
-        at org.glassfish.jersey.internal.Errors.process(Errors.java:292)
-        at org.glassfish.jersey.internal.Errors.process(Errors.java:274)
-        at org.glassfish.jersey.internal.Errors.process(Errors.java:244)
-        at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:265)
-        at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:235)
-        at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:684)
-        at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:394)
-        ... 30 more
-Caused by: java.lang.NoClassDefFoundError: org/elasticsearch/ElasticsearchStatusException
-        at io.confluent.connect.elasticsearch.ElasticsearchSinkConnector.validate(ElasticsearchSinkConnector.java:79)
-        at org.apache.kafka.connect.runtime.AbstractHerder.validateConnectorConfig(AbstractHerder.java:509)
-        at org.apache.kafka.connect.runtime.AbstractHerder.lambda$validateConnectorConfig$2(AbstractHerder.java:390)
-        at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
-        at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-        at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
-        at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
-        ... 1 more
-Caused by: java.lang.ClassNotFoundException: org.elasticsearch.ElasticsearchStatusException
-        at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
-        at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
-        at org.apache.kafka.connect.runtime.isolation.PluginClassLoader.loadClass(PluginClassLoader.java:124)
-        at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
-        ... 8 more
-[2024-03-07 03:33:16,397] WARN unhandled due to prior sendError (org.eclipse.jetty.server.HttpChannelState:787)
-javax.servlet.ServletException: org.glassfish.jersey.server.ContainerException: java.lang.NoClassDefFoundError: org/elasticsearch/ElasticsearchStatusException
-        at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:410)
-        at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:346)
-        at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:358)
-        at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:311)
-        at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:205)
-        at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:799)
-        at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:554)
-        at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:233)
-        at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1624)
-        at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:233)
-        at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1440)
-        at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:188)
-        at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:505)
-        at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1594)
-        at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:186)
-        at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1355)
-        at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
-        at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:191)
-        at org.eclipse.jetty.server.handler.StatisticsHandler.handle(StatisticsHandler.java:181)
-        at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:127)
-        at org.eclipse.jetty.server.Server.handle(Server.java:516)
-        at org.eclipse.jetty.server.HttpChannel.lambda$handle$1(HttpChannel.java:487)
-        at org.eclipse.jetty.server.HttpChannel.dispatch(HttpChannel.java:732)
-        at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:479)
-        at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:277)
-        at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:311)
-        at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:105)
-        at org.eclipse.jetty.io.ChannelEndPoint$1.run(ChannelEndPoint.java:104)
-        at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:883)
-        at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1034)
-        at java.base/java.lang.Thread.run(Thread.java:829)
-Caused by: org.glassfish.jersey.server.ContainerException: java.lang.NoClassDefFoundError: org/elasticsearch/ElasticsearchStatusException
-        at org.glassfish.jersey.servlet.internal.ResponseWriter.rethrow(ResponseWriter.java:255)
-        at org.glassfish.jersey.servlet.internal.ResponseWriter.failure(ResponseWriter.java:237)
-        at org.glassfish.jersey.server.ServerRuntime$Responder.process(ServerRuntime.java:445)
-        at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:264)
-        at org.glassfish.jersey.internal.Errors$1.call(Errors.java:248)
-        at org.glassfish.jersey.internal.Errors$1.call(Errors.java:244)
-        at org.glassfish.jersey.internal.Errors.process(Errors.java:292)
-        at org.glassfish.jersey.internal.Errors.process(Errors.java:274)
-        at org.glassfish.jersey.internal.Errors.process(Errors.java:244)
-        at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:265)
-        at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:235)
-        at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:684)
-        at org.glassfish.jersey.servlet.WebComponent.serviceImpl(WebComponent.java:394)
-        ... 30 more
-Caused by: java.lang.NoClassDefFoundError: org/elasticsearch/ElasticsearchStatusException
-        at io.confluent.connect.elasticsearch.ElasticsearchSinkConnector.validate(ElasticsearchSinkConnector.java:79)
-        at org.apache.kafka.connect.runtime.AbstractHerder.validateConnectorConfig(AbstractHerder.java:509)
-        at org.apache.kafka.connect.runtime.AbstractHerder.lambda$validateConnectorConfig$2(AbstractHerder.java:390)
-        at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
-        at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-        at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
-        at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
-        ... 1 more
-Caused by: java.lang.ClassNotFoundException: org.elasticsearch.ElasticsearchStatusException
-        at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
-        at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
-        at org.apache.kafka.connect.runtime.isolation.PluginClassLoader.loadClass(PluginClassLoader.java:124)
-        at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
-        ... 8 more
-[2024-03-07 03:33:16,506] INFO 127.0.0.1 - - [07/Mar/2024:03:33:16 +0000] "POST /connectors HTTP/1.1" 500 525 "-" "curl/7.81.0" 362 (org.apache.kafka.connect.runtime.rest.RestServer:62)
+nginx_offset# Bootstrap servers to connect to Kafka brokers
+bootstrap.servers=192.168.178.144:9092,192.168.178.145:9092,192.168.178.146:9092
+# Kafka Connect converters for data format and translation
+key.converter=org.apache.kafka.connect.json.JsonConverter
+value.converter=org.apache.kafka.connect.json.JsonConverter
 
+# General settings
+tasks.max=5
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
+group.id=logs.group
 
+# Offset storage configuration
+offset.storage.topic=logs_offset
+config.storage.topic=logs_storage
+status.storage.topic=log_status
 
+# Flush interval for offset commits (in milliseconds)
+offset.flush.interval.ms=4000
 
-
-
-
-
-
-
-
-
-
-
-
-
-curl -X POST -H "Content-Type: application/json" --data @elk.json http://localhost:8083/connectors
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1"/>
-<title>Error 500 Request failed.</title>
-</head>
-<body><h2>HTTP ERROR 500 Request failed.</h2>
-<table>
-<tr><th>URI:</th><td>/connectors</td></tr>
-<tr><th>STATUS:</th><td>500</td></tr>
-<tr><th>MESSAGE:</th><td>Request failed.</td></tr>
-<tr><th>SERVLET:</th><td>org.glassfish.jersey.servlet.ServletContainer-3bd632b0</td></tr>
-</table>
-<hr/><a href="https://eclipse.org/jetty">Powered by Jetty:// 9.4.52.v20230823</a><hr/>
-
-</body>
-</html>
+# Plugin path for connectors, converters, and transformations
+plugin.path=/usr/share/java,/home/omid/confluentinc-kafka-connect-elasticsearch-14.0.12,/root/elasticsearch-connector/
+# Uncomment the line below for debugging purposes
+log4j.logger.org.apache.kafka.connect=DEBUG
