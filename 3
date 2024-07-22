@@ -1,17 +1,19 @@
-swagger: '2.0'
-info:
-  title: Proxy API
-  version: '1.0.0'
-basePath: /v1
-paths:
-  /:
-    get:
-      responses:
-        '200':
-          description: OK
-      x-amazon-apigateway-integration:
-        uri: http://localhost/nginx/1.0.0
-        passthroughBehavior: when_no_match
-        httpMethod: GET
-        type: http_proxy
-        timeoutInMillis: 30000
+wget https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+
+sudo tar -zxvf apache-maven-3.6.3-bin.tar.gz -C /opt
+
+sudo ln -s /opt/apache-maven-3.6.3 /opt/maven
+
+
+sudo vi /etc/profile.d/maven.sh
+export M2_HOME=/opt/maven
+export MAVEN_HOME=/opt/maven
+export PATH=${M2_HOME}/bin:${PATH}
+
+
+sudo chmod +x /etc/profile.d/maven.sh
+
+
+source /etc/profile.d/maven.sh
+
+mvn -version
