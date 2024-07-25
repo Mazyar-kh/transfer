@@ -1,39 +1,36 @@
-http {
-    log_format custom_combined '$remote_addr - $remote_user [$time_local] '
-                               '"$request" $status $body_bytes_sent '
-                               '"$http_referer" "$http_user_agent" '
-                               '$ssl_protocol/$ssl_cipher';
-
-    access_log /var/log/nginx/access.log custom_combined;
-
-    # Other configurations...
-
-    server {
-        listen 443 ssl;
-        server_name your_domain.com;
-
-        ssl_certificate /path/to/your/certificate.crt;
-        ssl_certificate_key /path/to/your/certificate.key;
-
-        # Your server configurations...
-
-        location / {
-            # Your location configurations...
-        }
-    }
-}
+################haproxy.conf
 
 
 
+defaults
+  mode http
+  timeout client 10s
+  timeout connect 5s
+  timeout server 10s
+  timeout http-request 10s
 
+frontend myfrontend
+  bind :81
+  bind :443 ssl crt /etc/haproxy/combined.pem
+  http-request redirect scheme https unless { ssl_fc }
+  http-request set-header X-Forwarded-Proto https if { ssl_fc }
+
+  acl is_cert_path path_beg /cert/
+  use_backend special if is_cert_path
+  default_backend myservers
+
+backend myservers
+  server server2 192.168.125.192:444 ssl verify required ca-file /etc/haproxy/combined.pem
+
+backend special
+  server server3 192.168.125.177:80
 
 
 
 
 
 
-
-
+##################nginx.conf
 events {
     worker_connections 768;
 }
@@ -98,14 +95,5 @@ http {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
+#################################createing .pem cert
+cat example.key example.crt > combined.pem
