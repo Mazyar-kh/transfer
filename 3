@@ -1,34 +1,111 @@
-Set the MAVEN_HOME environment variable to the installation directory of Maven 3.6.3.
-Add the MAVEN_HOME/bin directory to your PATH
+http {
+    log_format custom_combined '$remote_addr - $remote_user [$time_local] '
+                               '"$request" $status $body_bytes_sent '
+                               '"$http_referer" "$http_user_agent" '
+                               '$ssl_protocol/$ssl_cipher';
+
+    access_log /var/log/nginx/access.log custom_combined;
+
+    # Other configurations...
+
+    server {
+        listen 443 ssl;
+        server_name your_domain.com;
+
+        ssl_certificate /path/to/your/certificate.crt;
+        ssl_certificate_key /path/to/your/certificate.key;
+
+        # Your server configurations...
+
+        location / {
+            # Your location configurations...
+        }
+    }
+}
 
 
-Create a Toolchains File
-Create a file named toolchains.xml in the .m2 directory (usually located in your home directory, e.g., ~/.m2/toolchains.xml).
-Add the following configuration to specify Maven 3.6.3
-<?xml version="1.0" encoding="UTF8"?>
-<toolchains>
-  <toolchain>
-    <type>maven</type>
-    <provides>
-      <version>3.6.3</version>
-    </provides>
-    <configuration>
-      <home>/path/to/your/maven-3.6.3</home>
-    </configuration>
-  </toolchain>
-</toolchains>
 
 
-Ensure that your settings.xml file (located in the .m2 directory) includes the following configuration to enable toolchains:
-<settings>
-  ...
-  <toolchains>
-    <toolchain>
-      <type>maven</type>
-      <provides>
-        <version>3.6.3</version>
-      </provides>
-    </toolchain>
-  </toolchains>
-  ...
-</settings>
+
+
+
+
+
+
+
+
+events {
+    worker_connections 768;
+}
+
+http {
+    # Basic Settings
+    sendfile on;
+    tcp_nopush on;
+    types_hash_max_size 2048;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # SSL Settings
+    ssl_protocols TLSv1.3;  # Dropping SSLv3 and TLSv1.1 for security
+    ssl_prefer_server_ciphers on;
+
+    log_format combined_ssl '$remote_addr - $remote_user [$time_local] '
+                            '$ssl_protocol/$ssl_cipher '  # Logs TLS version and cipher
+                            '"$request" $status $body_bytes_sent '
+                            '"$http_referer" "$http_user_agent"';
+
+    # Logging Settings
+    access_log /var/log/nginx/access.log combined_ssl;
+    error_log /var/log/nginx/error.log;
+
+    # Gzip Settings (commented out for simplicity)
+    # gzip on;
+    # ... other gzip options ...
+
+    # Include virtual host configurations from specific directories
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+
+    # Redirect HTTP to HTTPS
+    server {
+        listen 8080;
+        server_name 192.168.125.192;  # Replace with your server name or domain
+
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+
+    # Example server block for HTTPS with TLS version logging
+    server {
+        listen 444 ssl;
+        server_name 192.168.125.192;  # Replace with your server name or domain
+
+        # SSL certificate and key paths (replace with your paths)
+        ssl_certificate /etc/haproxy/example.crt;
+        ssl_certificate_key /etc/haproxy/example.key;
+
+        # Location block to return 200 status for all requests
+        location /cert {
+            default_type application/json;
+            return 200 '{"message": "hello from 192 via tls"}';
+        }
+
+        # Optionally add more location blocks for specific paths here
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
