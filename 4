@@ -1,0 +1,26 @@
+docker run -itd --network=host --name my  -v /root/docker-ha.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro -v ./combined.pem:/usr/local/etc/haproxy/combined.pem:ro haproxy:latest
+
+
+
+defaults
+  mode http
+  timeout client 10s
+  timeout connect 5s
+  timeout server 10s
+  timeout http-request 10s
+
+frontend myfrontend
+  bind :8088
+  bind :4466 ssl crt /usr/local/etc/haproxy/combined.pem
+  http-request redirect scheme https unless { ssl_fc }
+  http-request set-header X-Forwarded-Proto https if { ssl_fc }
+
+  acl is_cert_path path_beg /cert/
+  use_backend special if is_cert_path
+  default_backend myservers
+
+backend myservers
+  server server2 192.168.125.192:444 ssl verify required ca-file /usr/local/etc/haproxy/combined.pem
+
+backend special
+  server server3 192.168.125.177:80
