@@ -1,26 +1,17 @@
-docker run -itd --network=host --name my  -v /root/docker-ha.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro -v ./combined.pem:/usr/local/etc/haproxy/combined.pem:ro haproxy:latest
+server {
+    listen 443 ssl;
+    server_name your-domain.com;
 
+    ssl_certificate /path/to/your/certificate.crt;
+    ssl_certificate_key /path/to/your/private.key;
 
+    ssl_protocols TLSv1.2 TLSv1.3;  # Enable both TLS 1.2 and 1.3
+    ssl_prefer_server_ciphers off;  # This is important for TLS 1.3
 
-defaults
-  mode http
-  timeout client 10s
-  timeout connect 5s
-  timeout server 10s
-  timeout http-request 10s
+    # Other SSL configurations
+    ssl_ciphers 'TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256';
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
 
-frontend myfrontend
-  bind :8088
-  bind :4466 ssl crt /usr/local/etc/haproxy/combined.pem
-  http-request redirect scheme https unless { ssl_fc }
-  http-request set-header X-Forwarded-Proto https if { ssl_fc }
-
-  acl is_cert_path path_beg /cert/
-  use_backend special if is_cert_path
-  default_backend myservers
-
-backend myservers
-  server server2 192.168.125.192:444 ssl verify required ca-file /usr/local/etc/haproxy/combined.pem
-
-backend special
-  server server3 192.168.125.177:80
+    # Your existing server configuration
+}
